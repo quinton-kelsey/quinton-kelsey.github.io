@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quinton Kelsey | IT, Networking & AV Engineer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #21262d;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --accent3: #f78166;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(13,17,23,0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: 0.5px; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 6rem 2rem 4rem;
+      background: radial-gradient(ellipse at 50% 0%, rgba(88,166,255,0.08) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(63,185,80,0.1); border: 1px solid rgba(63,185,80,0.3);
+      color: var(--accent2); border-radius: 999px; padding: 0.3rem 1rem;
+      font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.6rem; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--muted); max-width: 600px; margin: 0 auto 2rem;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2.5rem; }
+    .tag {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 0.8rem;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: #0d1117; font-weight: 700;
+      padding: 0.75rem 1.75rem; border-radius: var(--radius); text-decoration: none;
+      font-size: 0.95rem; transition: opacity .2s, transform .15s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border); padding: 0.75rem 1.75rem;
+      border-radius: var(--radius); text-decoration: none;
+      font-size: 0.95rem; transition: border-color .2s, transform .15s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 1rem; }
+    .divider { width: 40px; height: 3px; background: var(--accent); border-radius: 99px; margin-bottom: 2.5rem; }
+    .full-width { max-width: 100%; padding-left: 2rem; padding-right: 2rem; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1.05rem; }
+    .about-text p strong { color: var(--text); }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem; text-align: center;
+    }
+    .stat-number { font-size: 2rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* SKILLS */
+    .skills-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-group { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .skill-group h3 { font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.8rem;
+      transition: border-color .2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.75rem; transition: border-color .2s, transform .15s; position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .project-type {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .project-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .project-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.6; }
+    .project-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+    .project-tech {
+      background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.2);
+      color: var(--accent); border-radius: 4px; padding: 0.2rem 0.6rem; font-size: 0.75rem;
+    }
+.placeholder-notice {
+      background: rgba(247,129,102,0.08); border: 1px dashed rgba(247,129,102,0.3);
+      border-radius: var(--radius); padding: 1rem 1.5rem; color: var(--accent3);
+      font-size: 0.85rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    /* EXPERIENCE */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -2.4rem; top: 0.4rem;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .timeline-company { font-size: 0.8rem; color: var(--accent); font-weight: 600; margin-bottom: 0.2rem; }
+    .timeline-role { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .timeline-date { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .timeline-bullets { list-style: none; }
+    .timeline-bullets li { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.4rem; padding-left: 1rem; position: relative; }
+    .timeline-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+    /* CERTS */
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+    .cert-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.25rem; display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .cert-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .cert-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .cert-issuer { font-size: 0.75rem; color: var(--muted); }
+    .cert-status { font-size: 0.7rem; color: var(--accent2); margin-top: 0.2rem; font-weight: 600; }
+    .cert-placeholder { opacity: 0.5; border-style: dashed; }
+    .cert-placeholder .cert-status { color: var(--accent3); }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .contact-text h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+    .contact-text p { color: var(--muted); margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.25rem;
+      text-decoration: none; color: var(--text); transition: border-color .2s;
+    }
+    .contact-link:hover { border-color: var(--accent); }
+    .contact-link-icon { font-size: 1.25rem; }
+    .contact-link-label { font-size: 0.75rem; color: var(--muted); }
+    .contact-link-value { font-size: 0.9rem; font-weight: 600; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem;
+      text-align: center; color: var(--muted); font-size: 0.85rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">QK.dev</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-badge">Open to Work &mdash; On-site · Hybrid · Remote</div>
+      <h1>Quinton <span>Kelsey</span></h1>
+      <p class="hero-sub">Networking Specialist · AV Engineer · Systems Administrator — building reliable infrastructure, designing AV systems, securing networks, and bridging the gap between technology and the people who depend on it.</p>
+      <div class="hero-tags">
+        <span class="tag">Networking</span>
+        <span class="tag">AV Engineering</span>
+        <span class="tag">Q-SYS</span>
+        <span class="tag">IT Infrastructure</span>
+        <span class="tag">Genetec</span>
+        <span class="tag">Cybersecurity</span>
+        <span class="tag">Switch Configuration</span>
+        <span class="tag">Cloud</span>
+        <span class="tag">AI / Automation</span>
+        <span class="tag">Systems Administration</span>
+        <span class="tag">Server Administration</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About Me</div>
+    <div class="section-title">Passionate about building<br/>what keeps IT running.</div>
+    <div class="divider"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>Networking Specialist & AV Engineer at Mahaska Communication Group</strong> based in Oskaloosa, Iowa — managing network infrastructure, Audio/Video system design, physical security (Genetec), and end-to-end IT support for business clients.</p>
+        <p>I design, build, and commission <strong>enterprise AV systems using Q-SYS</strong>, including major projects across multiple Musco Lighting sites throughout Iowa and Adventureland Waterpark. I create full project submittals — system drawings, equipment schedules, and technical documentation — from scratch.</p>
+        <p>My background spans nearly <strong>a decade of hands-on IT, networking, and AV experience</strong> — from field technician work at MTI across Iowa, to running all things tech at Tod Kelsey Masonry, to currently leading AV projects across multiple Musco Corporation sites at MCG. I also implemented, monitored, and trained others on <strong>Genetec</strong> (physical security & surveillance platform) and actively leverage <strong>AI tools and automation</strong> to streamline workflows and solve problems faster.</p>
+        <p>I'm currently pursuing my <strong>Associate of Science in Computer Science at SNHU</strong> and open to virtually any IT role — <strong>AV engineering, network infrastructure, systems administration, cloud, cybersecurity, software engineering, data engineering, DevOps, IT support, or anything in between</strong>. If it's in tech, I'm interested.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-number">9+</div>
+          <div class="stat-label">Years of IT & Tech Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">76</div>
+          <div class="stat-label">Verified LinkedIn Skills</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">Q-SYS</div>
+          <div class="stat-label">AV Platform Expert</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">A.S.</div>
+          <div class="stat-label">Computer Science @ SNHU (in progress)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <div id="skills" class="skills-section">
+    <section style="max-width:1100px;">
+      <div class="section-label">Technical Skills</div>
+      <div class="section-title">What I Work With</div>
+      <div class="divider"></div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h3>Networking</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Network Systems</span>
+            <span class="skill-tag">IT Infrastructure</span>
+            <span class="skill-tag">TCP/IP</span>
+            <span class="skill-tag">VLANs</span>
+            <span class="skill-tag">DNS/DHCP</span>
+            <span class="skill-tag">Routing & Switching</span>
+            <span class="skill-tag">Switch Configuration</span>
+            <span class="skill-tag">Cisco Switches</span>
+            <span class="skill-tag">Server Administration</span>
+            <span class="skill-tag">RJ45 Termination</span>
+            <span class="skill-tag">Cat5/6 Termination</span>
+            <span class="skill-tag">Cable Management</span>
+            <span class="skill-tag">Fiber & Copper</span>
+            <span class="skill-tag">Rack & Stack</span>
+            <span class="skill-tag">Structured Cabling</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Virtualization & Cloud</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">VMware</span>
+            <span class="skill-tag">Virtualization</span>
+            <span class="skill-tag">Cloud Platforms</span>
+            <span class="skill-tag">Hypervisors</span>
+            <span class="skill-tag">VM Management</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Systems & Scripting</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Scripting</span>
+            <span class="skill-tag">Lua</span>
+            <span class="skill-tag">PowerShell</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Bash</span>
+            <span class="skill-tag">Windows Server</span>
+            <span class="skill-tag">Linux</span>
+            <span class="skill-tag">SentinelOne</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>IT Support & Tools</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Active Directory</span>
+            <span class="skill-tag">Helpdesk</span>
+            <span class="skill-tag">Troubleshooting</span>
+            <span class="skill-tag">Endpoint Management</span>
+            <span class="skill-tag">Laptop / Device Support</span>
+            <span class="skill-tag">Salesforce</span>
+            <span class="skill-tag">Hardware Repair</span>
+            <span class="skill-tag">Customer Support</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Audio / Video Engineering</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Q-SYS</span>
+            <span class="skill-tag">AV System Design</span>
+            <span class="skill-tag">AV Integration</span>
+            <span class="skill-tag">Lua Scripting</span>
+            <span class="skill-tag">Block Controller</span>
+            <span class="skill-tag">DSP Programming</span>
+            <span class="skill-tag">Submittals</span>
+            <span class="skill-tag">System Drawings</span>
+            <span class="skill-tag">Equipment Scheduling</span>
+            <span class="skill-tag">Signal Flow</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>AI & Automation</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">AI Tooling</span>
+            <span class="skill-tag">Workflow Automation</span>
+            <span class="skill-tag">Scripting & Bots</span>
+            <span class="skill-tag">Prompt Engineering</span>
+            <span class="skill-tag">Process Optimization</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Security & Surveillance</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Genetec</span>
+            <span class="skill-tag">Video Surveillance</span>
+            <span class="skill-tag">Physical Security</span>
+            <span class="skill-tag">Access Control</span>
+            <span class="skill-tag">Network Security</span>
+            <span class="skill-tag">Firewall Configuration</span>
+            <span class="skill-tag">Security Monitoring</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Soft Skills</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Client Communication</span>
+            <span class="skill-tag">Cross-Team Collaboration</span>
+            <span class="skill-tag">Problem Solving</span>
+            <span class="skill-tag">Technical Documentation</span>
+            <span class="skill-tag">Project Submittals</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <div class="section-title">Things I've Built & Worked On</div>
+    <div class="divider"></div>
+    <div class="projects-grid">
+
+      <!-- MUSCO -->
+      <div class="project-card">
+        <div class="project-type">AV Engineering · Multi-Site Corporate</div>
+        <h3>Musco Corporation — Multi-Site AV Renovation</h3>
+        <p>Led AV renovations across multiple Musco Corporation sites throughout Iowa. Designed full Q-SYS systems at each location — DSP programming (Lua scripting & block controller), signal flow, equipment selection, and complete submittals produced from scratch for every site.</p>
+        <div class="project-techs">
+          <span class="project-tech">Q-SYS</span>
+          <span class="project-tech">Lua Scripting</span>
+          <span class="project-tech">DSP Programming</span>
+          <span class="project-tech">Submittals</span>
+          <span class="project-tech">AV Integration</span>
+        </div>
+      </div>
+
+      <!-- ADVENTURELAND -->
+      <div class="project-card">
+        <div class="project-type">AV Engineering · Entertainment</div>
+        <h3>Adventureland Waterpark — Q-SYS Conversion</h3>
+        <p>Converted Adventureland Waterpark's full AV infrastructure to Q-SYS. Handled system design, equipment scheduling, submittal documentation, and on-site commissioning to modernize the park's audio and video systems.</p>
+        <div class="project-techs">
+          <span class="project-tech">Q-SYS</span>
+          <span class="project-tech">AV Conversion</span>
+          <span class="project-tech">System Design</span>
+          <span class="project-tech">Submittals</span>
+          <span class="project-tech">Commissioning</span>
+        </div>
+      </div>
+
+      <!-- GENETEC CARGILL -->
+      <div class="project-card">
+        <div class="project-type">Physical Security · Enterprise</div>
+        <h3>Genetec Implementation — Cargill</h3>
+        <p>Assisted with the full implementation of the Genetec physical security and video surveillance platform at Cargill. Monitored and administered the system daily, and trained staff on configuration and operation.</p>
+        <div class="project-techs">
+          <span class="project-tech">Genetec</span>
+          <span class="project-tech">Physical Security</span>
+          <span class="project-tech">Video Surveillance</span>
+          <span class="project-tech">Staff Training</span>
+        </div>
+      </div>
+
+      <!-- COURTHOUSE -->
+      <div class="project-card">
+        <div class="project-type">AV Engineering · Government</div>
+        <h3>Mahaska County Courthouse — AV System</h3>
+        <p>Designed and installed AV systems for the Mahaska County Courthouse including the Judge's quarters — full system design, technical documentation, and commissioning for a government facility.</p>
+        <div class="project-techs">
+          <span class="project-tech">AV System Design</span>
+          <span class="project-tech">Q-SYS</span>
+          <span class="project-tech">Government Facilities</span>
+          <span class="project-tech">Submittals</span>
+        </div>
+      </div>
+
+      <!-- MOULTON SCHOOL DISTRICT -->
+      <div class="project-card">
+        <div class="project-type">IT Management · Education</div>
+        <h3>Moulton School District — IT Program Lead</h3>
+        <p>Served as sole IT lead for the Moulton School District during the 2025–2026 school year under MCG contract. Managed Active Directory, network and connectivity troubleshooting, security cameras, and full device support for staff and students district-wide.</p>
+        <div class="project-techs">
+          <span class="project-tech">Active Directory</span>
+          <span class="project-tech">Network Troubleshooting</span>
+          <span class="project-tech">Camera Systems</span>
+          <span class="project-tech">Endpoint Management</span>
+        </div>
+      </div>
+
+      <!-- PHYSICAL CORE REDUNDANCY -->
+      <div class="project-card">
+        <div class="project-type">Network Engineering · Infrastructure</div>
+        <h3>Physical Core Redundancy</h3>
+        <p>Assisted with implementing site-wide safety and redundancy protocols for switches and network devices across a large multi-site deployment — ensuring high availability and failover protection.</p>
+        <div class="project-techs">
+          <span class="project-tech">Switch Configuration</span>
+          <span class="project-tech">Network Redundancy</span>
+          <span class="project-tech">Infrastructure</span>
+          <span class="project-tech">Cisco</span>
+        </div>
+      </div>
+
+      <!-- ADD MORE -->
+      <div class="project-card" style="border-style:dashed;opacity:0.5;display:flex;align-items:center;justify-content:center;min-height:200px;cursor:pointer;">
+        <div style="text-align:center;color:var(--muted);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">+</div>
+          <div style="font-size:0.9rem;">Add your next project</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:5rem 2rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="section-label">Experience</div>
+      <div class="section-title">Where I've Made an Impact</div>
+      <div class="divider"></div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-company">Mahaska Communication Group</div>
+          <div class="timeline-role">Networking Specialist & AV Engineer</div>
+          <div class="timeline-date">Sep 2024 – Present · Oskaloosa, Iowa</div>
+          <ul class="timeline-bullets">
+            <li>Design, engineer, and commission enterprise AV systems using Q-SYS for commercial and entertainment clients</li>
+            <li>Build complete project submittals — system drawings, equipment schedules, signal flow diagrams, and technical specs</li>
+            <li>Led AV renovation at Musco Lighting (Muscatine) and Q-SYS platform conversion at Adventureland Waterpark</li>
+            <li>Hands-on physical networking across all levels — configuring switches, server administration, RJ45 and Cat5/6 termination, structured cabling, and rack & stack builds</li>
+            <li>Deploy, configure, and maintain network infrastructure for business and residential clients across the region</li>
+            <li>Support server-side IT operations and assist with virtualization environments</li>
+            <li>Served as sole IT lead for Moulton School District (2025–2026 school year) under MCG contract — administered Active Directory, performed network and connectivity troubleshooting, maintained security cameras, and provided hands-on support for staff and student laptops district-wide</li>
+            <li>Implemented, monitored, and administered Genetec physical security and video surveillance platform — and trained team members on its daily operation</li>
+            <li>Leverage AI tools and automation to streamline workflows, accelerate troubleshooting, and improve team efficiency</li>
+            <li>Develop scripting solutions to automate routine network and AV tasks</li>
+          </ul>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-company">MTI – Mobile Technologies Inc.</div>
+          <div class="timeline-role">Field Technician (Part-time)</div>
+          <div class="timeline-date">Mar 2021 – Nov 2022 · Ankeny, Iowa</div>
+          <ul class="timeline-bullets">
+            <li>Deployed and serviced IT hardware and display systems at client sites across Iowa</li>
+            <li>Managed data entry and client records in Salesforce CRM</li>
+            <li>Coordinated directly with high-level management to schedule deployments and resolve field issues</li>
+            <li>Delivered consistent customer satisfaction through professional communication and timely problem resolution</li>
+          </ul>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-company">Tod Kelsey Masonry</div>
+          <div class="timeline-role">Customer Service Representative & IT</div>
+          <div class="timeline-date">Jul 2016 – Feb 2025 · 8+ Years</div>
+          <ul class="timeline-bullets">
+            <li>Owned all internal IT responsibilities — hardware setup, troubleshooting, and software support</li>
+            <li>Managed client communications and provided front-line customer service for a high-volume operation</li>
+            <li>Built strong cross-functional collaboration skills working alongside management and field teams</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="section-label">Certifications</div>
+    <div class="section-title">Credentials & Learning</div>
+    <div class="divider"></div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">A.S. Computer Science</div>
+          <div class="cert-issuer">Southern New Hampshire University</div>
+          <div class="cert-status">✓ In Progress — 3.5+ GPA</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">Computer Sciences</div>
+          <div class="cert-issuer">Des Moines Area Community College (DMACC)</div>
+          <div class="cert-status">✓ Attended 2022–2023</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">Diploma — Early Graduate</div>
+          <div class="cert-issuer">EBF High School</div>
+          <div class="cert-status">✓ 3.5+ GPA · Class of 2020</div>
+        </div>
+      </div>
+      <div class="cert-card cert-placeholder">
+        <div class="cert-icon">📋</div>
+        <div>
+          <div class="cert-name">CompTIA Network+</div>
+          <div class="cert-issuer">CompTIA</div>
+          <div class="cert-status">→ Add if earned / in progress</div>
+        </div>
+      </div>
+      <div class="cert-card cert-placeholder">
+        <div class="cert-icon">📋</div>
+        <div>
+          <div class="cert-name">CompTIA Security+</div>
+          <div class="cert-issuer">CompTIA</div>
+          <div class="cert-status">→ Add if earned / in progress</div>
+        </div>
+      </div>
+      <div class="cert-card cert-placeholder">
+        <div class="cert-icon">📋</div>
+        <div>
+          <div class="cert-name">VMware VCP / CCNA</div>
+          <div class="cert-issuer">VMware / Cisco</div>
+          <div class="cert-status">→ Add if earned / in progress</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div id="contact" style="background:var(--surface);border-top:1px solid var(--border);">
+    <section style="max-width:900px;">
+      <div class="contact-grid">
+        <div class="contact-text">
+          <div class="section-label">Contact</div>
+          <h2>Let's work together.</h2>
+          <p>I'm actively looking for new opportunities in networking, IT, cloud, and security. Whether you have a role, a project, or just want to connect — reach out.</p>
+          <a href="mailto:qkelsey23@gmail.com" class="btn-primary" style="display:inline-block;">Send an Email</a>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:qkelsey23@gmail.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            <div>
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-value">qkelsey23@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/quinton-kelsey/" target="_blank" class="contact-link">
+            <div class="contact-link-icon">💼</div>
+            <div>
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-value">linkedin.com/in/quinton-kelsey</div>
+            </div>
+          </a>
+          <a href="https://github.com/quinton-kelsey" target="_blank" class="contact-link">
+            <div class="contact-link-icon">🐙</div>
+            <div>
+              <div class="contact-link-label">GitHub</div>
+              <div class="contact-link-value">github.com/quinton-kelsey</div>
+            </div>
+          </a>
+          <div class="contact-link" style="cursor:default;">
+            <div class="contact-link-icon">📍</div>
+            <div>
+              <div class="contact-link-label">Location</div>
+              <div class="contact-link-value">Eddyville, Iowa · Open to Remote</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Built by Quinton Kelsey · <a href="mailto:qkelsey23@gmail.com">qkelsey23@gmail.com</a></p>
+  </footer>
+
+</body>
+</html>
